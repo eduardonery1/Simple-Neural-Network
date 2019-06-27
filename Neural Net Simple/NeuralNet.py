@@ -1,5 +1,6 @@
 import numpy as np
 
+#Sigmoid Func
 def nonlin(x,deriv=False):
 	if(deriv==True):
 	    return x*(1-x)
@@ -35,15 +36,14 @@ for j in xrange(60000):
     if (j% 10000) == 0:
         print "Error:" + str(np.mean(np.abs(l2_error)))
         
-    # in what direction is the target value?
-    # were we really sure? if so, don't change too much.
+    # Use how much we miss to improve in the next cicle, that's learning!
     l2_delta = l2_error*nonlin(l2,deriv=True)
 
     # how much did each l1 value contribute to the l2 error (according to the weights)?
     l1_error = l2_delta.dot(syn1.T)
     
     # in what direction is the target l1?
-    # were we really sure? if so, don't change too much.
+    # Higher the error higher the change
     l1_delta = l1_error * nonlin(l1,deriv=True)
 
     syn1 += l1.T.dot(l2_delta)
